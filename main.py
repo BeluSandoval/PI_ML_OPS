@@ -6,14 +6,6 @@ app = FastAPI()
 
 # http://127.0.0.1:8000 
 
-@app.get("/")
-def index():
-    return 'Bienvenidos'
-
-@app.get('/about')
-async def about():
-    return 'Soy Henry PI-MLOPs'
-
 # Importamos dataset
 df = pd.read_csv(r'df_final.csv')
 Df = pd.read_csv(r'Df_recomendacion.csv')
@@ -26,7 +18,7 @@ with open('similarity_matrix.pickle', 'rb') as f:
 
 #1
 @app.get('/peliculas_mes/{mes}')
-async def peliculas_mes(mes:str):
+def peliculas_mes(mes:str):
     
     # Creamos un diccionario para convertir nombres de meses a números
     meses = {'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4, 'mayo': 5, 'junio': 6,
@@ -43,7 +35,7 @@ async def peliculas_mes(mes:str):
 
 #2  
 @app.get('/peliculas_dia/{dia}')
-async def peliculas_dia(dia:str):
+def peliculas_dia(dia:str):
     
     dias_semana = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
     if dia.lower() not in dias_semana:
@@ -55,7 +47,7 @@ async def peliculas_dia(dia:str):
     
 #3
 @app.get('/franquicia/{franquicia}')
-async def franquicia(franquicia:str):
+def franquicia(franquicia:str):
     # Filtrar el DataFrame original para incluir solo filas con información sobre la franquicia
     franquicia_df = df[(df['belongs_to_collection'].notna()) & (df['belongs_to_collection'].str.contains(franquicia))]
     
@@ -73,7 +65,7 @@ async def franquicia(franquicia:str):
 
 #4
 @app.get('/peliculas_pais/{pais}')
-async def peliculas_pais(pais:str):
+def peliculas_pais(pais:str):
     # Contar el número de películas que se hicieron en el país especificado
     num_peliculas = len(df[df['production_countries'].str.contains(pais)])
     
@@ -82,7 +74,7 @@ async def peliculas_pais(pais:str):
 
 #5
 @app.get('/productoras/{productora}')
-async def productoras(productora:str):    
+def productoras(productora:str):    
     df_filtrado = df[df['production_companies'].str.contains(productora, na=False)]
     ganancia_total = df_filtrado['revenue'].sum()
     cantidad = len(df_filtrado)
@@ -90,7 +82,7 @@ async def productoras(productora:str):
 
 #6
 @app.get('/retorno/{pelicula}')
-async def retorno(pelicula:str):
+def retorno(pelicula:str):
     # Filtro la información de la película en base a su título
     pelicula_info = df[df['title'] == pelicula].iloc[0]
     
