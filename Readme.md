@@ -12,7 +12,6 @@
 
 <hr>  
 
-## **Descripción del problema (Contexto y rol a desarrollar)**
 <br/>
 
 ## **Contexto**
@@ -32,15 +31,31 @@ El objetivo principal de este proyecto es la creación de una API que consuma da
 
 + **`Análisis exploratorio de datos (EDA)`**: realizar un análisis exploratorio de datos en profundidad para obtener información sobre los atributos de la película, como el título, la descripción general y los géneros.
   
-+ **`Desarrollo de API`**: diseñar e implementar un conjunto de funciones para los endpoint que serán consumidos en la API. Luego esta se desplegará através de Render para que se pueda consumir desde de la web. 
++ **`Desarrollo de API`**: diseñar e implementar un conjunto de funciones para los endpoint que serán consumidos en la API. Luego esta se desplegará a través de Render para que se pueda consumir desde de la web. 
 
-+ **`Creación de un modelo de recomendación`**: entrenar nuestro modelo de machine learning para armar un sistema de recomendación de películas.Debe ser deployado como una función adicional de la API anterior y debe llamarse get_recommendation(titulo: str).
++ **`Creación de un modelo de recomendación`**: entrenar nuestro modelo de machine learning para armar un sistema de recomendación de películas. Debe ser deployado como una función adicional de la API anterior y debe llamarse get_recommendation(titulo: str).
 
 <br/>
 
-Procesamiento de datos: [ETL](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/ETL.ipynb)
+## **Procesamiento de datos:** 
 
-Análisis Exploratorio: [EDA](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/EDA.ipynb)
+[ETL](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/ETL.ipynb)
+
++ Algunos campos, como belongs_to_collection, production_companies y otros (ver diccionario de datos) están anidados, esto es o bien tienen un diccionario o una lista como valores en cada fila, ¡deberán desanidarlos para poder y unirlos al dataset de nuevo hacer alguna de las consultas de la API! O bien buscar la manera de acceder a esos datos sin desanidarlos.
+
++ Los valores nulos de los campos revenue, budget deben ser rellenados por el número 0.
+
++ Los valores nulos del campo release date deben eliminarse.
+
++ De haber fechas, deberán tener el formato AAAA-mm-dd, además deberán crear la columna release_year donde extraerán el año de la fecha de estreno.
+
++ Crear la columna con el retorno de inversión, llamada return con los campos revenue y budget, dividiendo estas dos últimas revenue / budget, cuando no hay datos disponibles para calcularlo, deberá tomar el valor 0.
+
++ Eliminar las columnas que no serán utilizadas, video,imdb_id,adult,original_title,vote_count,poster_path y homepage.
+
+## **Análisis Exploratorio de Datos**
+
+[EDA](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/EDA.ipynb)
 
 ## **Desarrollo API**
 
@@ -83,7 +98,7 @@ El despliegue se realizó a través de Render en el siguiente enlace [PI-MLOpsEn
 
 [recomendacion.ipynb](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/Recomendacion.ipynb)
 
-Para el sistema de recomendación se utilizó el modelo de "similitud de coseno". El nombre de la función se puede encontrar en la misma interfaz API que una séptima consulta, llamada get_recomendation(title), donde ingresa el título de una película y devuelve una lista de 5 películas recomendadas según ese título ingresado. Debido al gran tamaño del archivo generado luego del procesamiento, para poder ejecutar el deployment en Render, se redujo el número de registros a 1000, los cuales se guardan en un archivo .pickle llamado similarity_matrix.pickle. No obstante, para mostrar el funcionamiento de la función, hay una [lista de 5 peliculas](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/5_peliculas.txt) incluidas en el modelo.
+Para el sistema de recomendación se utilizó el modelo de "similitud de coseno". El nombre de la función se puede encontrar en la misma interfaz API que una séptima consulta, llamada get_recomendation(title), donde ingresa el título de una película y devuelve una lista de 5 películas recomendadas según ese título ingresado. Debido al gran tamaño del archivo generado luego del procesamiento, para poder ejecutar el deployment en Render, se redujo el número de registros a 1000, los cuales se guardan en un archivo .pickle llamado [similarity_matrix.pickle](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/similarity_matrix.pickle). No obstante, para mostrar el funcionamiento de la función, hay una [lista de 5 peliculas](https://github.com/BeluSandoval/PI_ML_OPS/blob/main/5_peliculas.txt) incluidas en el modelo.
 
 <br/>
 
