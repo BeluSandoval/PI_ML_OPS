@@ -104,7 +104,7 @@ Para el sistema de recomendación se utilizó el modelo de "similitud de coseno"
 
 
 ## **Video explicación:**
-[link](https://www.youtube.com/watch?v=3KWKnBZ7eiA)
+[link](https://youtu.be/EqOeW7UjpiA)
 
 
 **`Video`**: Necesitas que al equipo le quede claro que tus herramientas funcionan realmente! Haces un video mostrando el resultado de las consultas propuestas y de tu modelo de ML entrenado!
